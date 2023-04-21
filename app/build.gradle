@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    namespace 'top.defaults.pickerviewapp'
+    compileSdk 33
+
     defaultConfig {
-        applicationId "top.defaults.pickerviewapp"
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdk 24
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,22 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.jakewharton:butterknife:8.7.0'
-    implementation 'com.github.duanhong169:logger:1.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
-//    implementation 'com.github.duanhong169:picker-view:1.0.1'
-    implementation project(':picker-view')
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api "androidx.appcompat:appcompat:1.5.1"
+    api 'com.github.duanhong169:logger:1.0.0'
+    api project(':picker-view')
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
 }

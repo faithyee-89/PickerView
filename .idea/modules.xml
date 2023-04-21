@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PickerViewApp.iml" filepath="$PROJECT_DIR$/PickerViewApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/picker-view/picker-view.iml" filepath="$PROJECT_DIR$/picker-view/picker-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PickerView.iml" filepath="$PROJECT_DIR$/.idea/modules/PickerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PickerView.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PickerView.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PickerView.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PickerView.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PickerView.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PickerView.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PickerView.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PickerView.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.iml" filepath="$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.main.iml" filepath="$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/picker-view/PickerView.picker-view.unitTest.iml" />
     </modules>
   </component>
 </project>

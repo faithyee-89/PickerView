@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -19,10 +20,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DefaultPickerActivity"/>
-        <activity android:name=".DivisionPickerActivity"/>
-        <activity android:name=".DatePickerActivity"/>
-        <activity android:name=".PickerDialogActivity"/>
+        <activity android:name=".DefaultPickerActivity" android:exported="true"/>
+        <activity android:name=".DivisionPickerActivity" android:exported="true"/>
+        <activity android:name=".DatePickerActivity" android:exported="true"/>
+        <activity android:name=".PickerDialogActivity" android:exported="true"/>
     </application>
 
 </manifest>

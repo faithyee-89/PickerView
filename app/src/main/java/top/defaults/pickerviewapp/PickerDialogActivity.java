@@ -1,27 +1,24 @@
 package top.defaults.pickerviewapp;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import top.defaults.pickerviewapp.dialog.ActionListener;
+import top.defaults.pickerviewapp.dialog.BaseDialogFragment;
 import top.defaults.pickerviewapp.dialog.DatePickerDialog;
 import top.defaults.pickerviewapp.dialog.DivisionPickerDialog;
 import top.defaults.pickerviewapp.dialog.SimplePickerDialog;
-import top.defaults.pickerviewapp.dialog.BaseDialogFragment;
 import top.defaults.view.Division;
 
 public class PickerDialogActivity extends AppCompatActivity {
-
-    @BindView(R.id.textView) TextView textView;
-    @BindView(R.id.sampleChooser) RadioGroup sampleChooser;
+    private TextView textView;
+    private RadioGroup sampleChooser;
 
     ActionListener actionListener = new ActionListener() {
         @Override
@@ -44,16 +41,6 @@ public class PickerDialogActivity extends AppCompatActivity {
             }
         }
     };
-
-    @OnClick(R.id.withView)
-    void withView() {
-        choosePicker(BaseDialogFragment.TYPE_VIEW).show(getFragmentManager(), "view");
-    }
-
-    @OnClick(R.id.withDialog)
-    void withDialog() {
-        choosePicker(BaseDialogFragment.TYPE_DIALOG).show(getFragmentManager(), "dialog");
-    }
 
     BaseDialogFragment choosePicker(int type) {
         BaseDialogFragment picker;
@@ -78,7 +65,15 @@ public class PickerDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picker_dialog);
-        ButterKnife.bind(this);
+        textView = findViewById(R.id.textView);
+        sampleChooser = findViewById(R.id.sampleChooser);
+        findViewById(R.id.withView).setOnClickListener(v -> {
+            choosePicker(BaseDialogFragment.TYPE_VIEW).show(getFragmentManager(), "view");
+        });
+
+        findViewById(R.id.withDialog).setOnClickListener(v -> {
+            choosePicker(BaseDialogFragment.TYPE_DIALOG).show(getFragmentManager(), "dialog");
+        });
     }
 
     private String getDateString(Calendar date) {
