@@ -67,7 +67,7 @@ public class PickerView extends View {
     private boolean autoFitSize;
     private boolean curved;
     private Drawable selectedItemDrawable;
-    private int[] DEFAULT_GRADIENT_COLORS = new int[]{0xcffafafa, 0x9ffafafa, 0x5ffafafa};
+    private int[] DEFAULT_GRADIENT_COLORS = new int[]{0x1C1C1C, 0x1C1C1C, 0x1C1C1C};
     private int[] gradientColors = DEFAULT_GRADIENT_COLORS;
     private GradientDrawable topMask;
     private GradientDrawable bottomMask;
@@ -146,8 +146,8 @@ public class PickerView extends View {
             selectedItemDrawable = Utils.getDrawable(getContext(), R.drawable.top_defaults_view_pickerview_selected_item);
         }
 
-        topMask = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors);
-        bottomMask = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, gradientColors);
+//        topMask = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors);
+//        bottomMask = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, gradientColors);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PickerView);
         preferredMaxOffsetItemCount = typedArray.getInt(R.styleable.PickerView_preferredMaxOffsetItemCount, DEFAULT_MAX_OFFSET_ITEM_COUNT);
@@ -409,13 +409,13 @@ public class PickerView extends View {
         checkNotNull(adapter, "adapter == null");
         if (adapter.getItemCount() == 0 || itemHeight == 0) return;
 
-        if (!isInEditMode()) {
-            selectedItemDrawable.setBounds(0, (getMeasuredHeight() - itemHeight) / 2, getMeasuredWidth(), (getMeasuredHeight() + itemHeight) / 2);
-            selectedItemDrawable.draw(canvas);
-        }
+//        if (!isInEditMode()) {
+//            selectedItemDrawable.setBounds(0, (getMeasuredHeight() - itemHeight) / 2, getMeasuredWidth(), (getMeasuredHeight() + itemHeight) / 2);
+//            selectedItemDrawable.draw(canvas);
+//        }
 
         drawItems(canvas);
-        drawMasks(canvas);
+//        drawMasks(canvas);
     }
 
     private void drawItems(Canvas canvas) {
@@ -455,11 +455,11 @@ public class PickerView extends View {
     }
 
     private void drawMasks(Canvas canvas) {
-        topMask.setBounds(0, 0, getMeasuredWidth(), (getMeasuredHeight() - itemHeight) / 2);
-        topMask.draw(canvas);
-
-        bottomMask.setBounds(0, (getMeasuredHeight() + itemHeight) / 2, getMeasuredWidth(), getMeasuredHeight());
-        bottomMask.draw(canvas);
+//        topMask.setBounds(0, 0, getMeasuredWidth(), (getMeasuredHeight() - itemHeight) / 2);
+//        topMask.draw(canvas);
+//
+//        bottomMask.setBounds(0, (getMeasuredHeight() + itemHeight) / 2, getMeasuredWidth(), getMeasuredHeight());
+//        bottomMask.draw(canvas);
     }
 
     private void drawText(Canvas canvas, String text, float offset) {

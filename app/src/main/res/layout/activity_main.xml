@@ -39,4 +39,12 @@
         android:textAllCaps="false"
         android:text="弹出对话框选择"/>
 
+    <Button
+        android:id="@+id/clock_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAllCaps="false"
+        android:text="自定义时钟选择器"/>
+
 </LinearLayout>

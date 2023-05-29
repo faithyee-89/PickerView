@@ -73,6 +73,7 @@ public class PickerViewGroup extends LinearLayout {
     protected void bindParams(PickerView pickerView) {
         pickerView.setPreferredMaxOffsetItemCount(preferredMaxOffsetItemCount);
         pickerView.setItemHeight(itemHeight);
+        pickerView.setBackgroundColor(Color.parseColor("#000000"));
         pickerView.setTextSize(textSize);
         pickerView.setTextColor(textColor);
         pickerView.setAutoFitSize(autoFitSize);

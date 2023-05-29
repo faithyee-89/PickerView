@@ -24,6 +24,7 @@
         <activity android:name=".DivisionPickerActivity" android:exported="true"/>
         <activity android:name=".DatePickerActivity" android:exported="true"/>
         <activity android:name=".PickerDialogActivity" android:exported="true"/>
+        <activity android:name=".ClockPickerActivity" android:exported="true"/>
     </application>
 
 </manifest>

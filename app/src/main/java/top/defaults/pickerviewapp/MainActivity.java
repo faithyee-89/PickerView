@@ -22,5 +22,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.pickerDialog).setOnClickListener(v -> {
             startActivity(new Intent(this, PickerDialogActivity.class));
         });
+        findViewById(R.id.clock_picker).setOnClickListener(v -> {
+            startActivity(new Intent(this, ClockPickerActivity.class));
+        });
     }
 }
