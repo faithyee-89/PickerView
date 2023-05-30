@@ -4,38 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical"
+    android:padding="30dp"
     tools:context="top.defaults.pickerviewapp.MainActivity">
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1C1C1C"
+        android:timePickerMode="spinner"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#1C1C1C"
+        android:padding="20dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/top_defaults_view_pickerview_selected_item_v2" />
-
-        <TimePicker
-            android:background="@color/colorPrimary"
+        <top.defaults.view.ClockPickerView
             android:id="@+id/clockPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:timePickerMode="spinner"
-            app:textColor="#ffffff"
-            app:textSize="60sp" />
-
+            android:background="#1C1C1C"
+            app:itemHeight="40dp"
+            app:preferredMaxOffsetItemCount="1"
+            app:textColor="#FFFFFF"
+            app:textSize="28sp" />
 
     </RelativeLayout>
-
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFEB3B"
         android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@color/colorAccent" />
+        android:padding="4dp"
+        android:text="aaa"
+        android:textColor="#3F51B5"
+        android:textSize="16sp" />
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import static top.defaults.view.PickerView.DEFAULT_MAX_OFFSET_ITEM_COUNT;
+import static top.defaults.view.PickerView.PICKER_VIEW_DIRECTION_CENTER;
 
 @SuppressWarnings("unused")
 public class PickerViewGroup extends LinearLayout {
@@ -66,18 +67,25 @@ public class PickerViewGroup extends LinearLayout {
 
     protected void settlePickerView(PickerView pickerView, boolean narrow) {
         if (pickerView == null) return;
-        bindParams(pickerView);
+        bindParams(pickerView, PICKER_VIEW_DIRECTION_CENTER);
         addPickerView(pickerView, narrow);
     }
 
-    protected void bindParams(PickerView pickerView) {
+    protected void settlePickerView(PickerView pickerView, boolean narrow, int viewDirection) {
+        if (pickerView == null) return;
+        bindParams(pickerView, viewDirection);
+        addPickerView(pickerView, narrow);
+    }
+
+    protected void bindParams(PickerView pickerView, int viewDirection) {
         pickerView.setPreferredMaxOffsetItemCount(preferredMaxOffsetItemCount);
         pickerView.setItemHeight(itemHeight);
-        pickerView.setBackgroundColor(Color.parseColor("#000000"));
         pickerView.setTextSize(textSize);
         pickerView.setTextColor(textColor);
         pickerView.setAutoFitSize(autoFitSize);
+        pickerView.setBackgroundColor(Color.parseColor("#1C1C1C"));
         pickerView.setCurved(curved);
+        pickerView.setViewDirection(viewDirection);
     }
 
     protected void addPickerView(PickerView pickerView, boolean narrow) {

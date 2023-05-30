@@ -1,5 +1,7 @@
 package top.defaults.view;
 
+import static top.defaults.view.Utils.checkNotNull;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -7,8 +9,6 @@ import android.util.AttributeSet;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.Locale;
-
-import static top.defaults.view.Utils.checkNotNull;
 
 @SuppressWarnings("unused")
 public class DateTimePickerView extends PickerViewGroup {
@@ -342,7 +342,7 @@ public class DateTimePickerView extends PickerViewGroup {
 
                     private int stepOffset() {
                         if (!isAtStartDateAndHour()) return 0;
-                        int fix = startDate.get(Calendar.MINUTE) % minutesInterval != 0 ? 1: 0;
+                        int fix = startDate.get(Calendar.MINUTE) % minutesInterval != 0 ? 1 : 0;
                         return startDate.get(Calendar.MINUTE) / minutesInterval + fix;
                     }
 
@@ -580,7 +580,7 @@ public class DateTimePickerView extends PickerViewGroup {
                 yearPickerView.setOnSelectedItemChangedListener(new PickerView.OnSelectedItemChangedListener() {
                     @Override
                     public void onSelectedItemChanged(PickerView pickerView, int previousPosition, int selectedItemPosition) {
-                        CalendarField field = (CalendarField)  pickerView.getAdapter().getItem(selectedItemPosition);
+                        CalendarField field = (CalendarField) pickerView.getAdapter().getItem(selectedItemPosition);
                         selectedDate.set(Calendar.YEAR, field.value);
                         addFlags(FIELD_YEAR);
                         monthPickerView.notifyDataSetChanged();

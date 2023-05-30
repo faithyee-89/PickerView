@@ -2,8 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:right="-2px" android:left="-2px">
         <shape>
-            <solid android:color="#732F2F" />
-            <corners android:radius="10dp" />
+            <solid android:color="#2C2C2C" />
+            <corners
+                android:topRightRadius="10dp"
+                android:bottomRightRadius="10dp" />
         </shape>
     </item>
 </layer-list>

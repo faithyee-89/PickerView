@@ -34,6 +34,12 @@ public class PickerView extends View {
     static final int DEFAULT_TEXT_SIZE_IN_SP = 14;
     static final int DEFAULT_ITEM_HEIGHT_IN_DP = 24;
     static final int DEFAULT_MAX_OFFSET_ITEM_COUNT = 3;
+
+    static final int PICKER_VIEW_DIRECTION_LEFT = 0;
+
+    static final int PICKER_VIEW_DIRECTION_CENTER = 1;
+
+    static final int PICKER_VIEW_DIRECTION_RIGHT = 2;
     private int preferredMaxOffsetItemCount = DEFAULT_MAX_OFFSET_ITEM_COUNT;
     private int selectedItemPosition;
 
@@ -61,13 +67,20 @@ public class PickerView extends View {
 
     private int itemHeight;
     private int textSize;
+    private int itemMargin;
+    private int viewDirection;
     private int textColor = Color.BLACK;
     private Typeface typeface;
     private boolean isCyclic;
     private boolean autoFitSize;
     private boolean curved;
+
+    // TODO: 2023/5/30 配合pickerViewGroup进行改造 
     private Drawable selectedItemDrawable;
-    private int[] DEFAULT_GRADIENT_COLORS = new int[]{0x1C1C1C, 0x1C1C1C, 0x1C1C1C};
+    /**
+     * 蒙层
+     */
+    private int[] DEFAULT_GRADIENT_COLORS = new int[]{0x801C1C1C, 0x721C1C1C, 0x001C1C1C};
     private int[] gradientColors = DEFAULT_GRADIENT_COLORS;
     private GradientDrawable topMask;
     private GradientDrawable bottomMask;
@@ -76,6 +89,8 @@ public class PickerView extends View {
     private float radius;
     private Camera camera;
     private Matrix matrix;
+
+    private Context context;
 
     public interface PickerItem {
         String getText();
@@ -95,6 +110,7 @@ public class PickerView extends View {
     }
 
     private void init(Context context, AttributeSet attrs) {
+        this.context = context;
         gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -143,11 +159,11 @@ public class PickerView extends View {
                 }
             };
         } else {
-            selectedItemDrawable = Utils.getDrawable(getContext(), R.drawable.top_defaults_view_pickerview_selected_item);
+            setViewDirection(viewDirection);
         }
 
-//        topMask = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors);
-//        bottomMask = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, gradientColors);
+        topMask = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors);
+        bottomMask = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, gradientColors);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PickerView);
         preferredMaxOffsetItemCount = typedArray.getInt(R.styleable.PickerView_preferredMaxOffsetItemCount, DEFAULT_MAX_OFFSET_ITEM_COUNT);
@@ -164,6 +180,7 @@ public class PickerView extends View {
         isCyclic = typedArray.getBoolean(R.styleable.PickerView_isCyclic, false);
         autoFitSize = typedArray.getBoolean(R.styleable.PickerView_autoFitSize, true);
         curved = typedArray.getBoolean(R.styleable.PickerView_curved, false);
+        viewDirection = typedArray.getInteger(R.styleable.PickerView_direction, 1);
         typedArray.recycle();
 
         initPaints();
@@ -326,6 +343,22 @@ public class PickerView extends View {
         }
     }
 
+    public void setViewDirection(int direction) {
+        this.viewDirection = direction;
+        switch (viewDirection) {
+            case PICKER_VIEW_DIRECTION_LEFT:
+                selectedItemDrawable = Utils.getDrawable(getContext(), R.drawable.top_defaults_view_pickerview_selected_left_item);
+                break;
+            case PICKER_VIEW_DIRECTION_CENTER:
+                selectedItemDrawable = Utils.getDrawable(getContext(), R.drawable.top_defaults_view_pickerview_selected_center_item);
+                break;
+            default:
+                selectedItemDrawable = Utils.getDrawable(getContext(), R.drawable.top_defaults_view_pickerview_selected_right_item);
+                break;
+        }
+        invalidate();
+    }
+
     public int getSelectedItemPosition() {
         return clampItemPosition(selectedItemPosition);
     }
@@ -409,13 +442,13 @@ public class PickerView extends View {
         checkNotNull(adapter, "adapter == null");
         if (adapter.getItemCount() == 0 || itemHeight == 0) return;
 
-//        if (!isInEditMode()) {
-//            selectedItemDrawable.setBounds(0, (getMeasuredHeight() - itemHeight) / 2, getMeasuredWidth(), (getMeasuredHeight() + itemHeight) / 2);
-//            selectedItemDrawable.draw(canvas);
-//        }
+        if (!isInEditMode()) {
+            selectedItemDrawable.setBounds(0, (getMeasuredHeight() - itemHeight) / 2, getMeasuredWidth(), (getMeasuredHeight() + itemHeight) / 2);
+            selectedItemDrawable.draw(canvas);
+        }
 
         drawItems(canvas);
-//        drawMasks(canvas);
+        drawMasks(canvas);
     }
 
     private void drawItems(Canvas canvas) {
@@ -455,11 +488,11 @@ public class PickerView extends View {
     }
 
     private void drawMasks(Canvas canvas) {
-//        topMask.setBounds(0, 0, getMeasuredWidth(), (getMeasuredHeight() - itemHeight) / 2);
-//        topMask.draw(canvas);
-//
-//        bottomMask.setBounds(0, (getMeasuredHeight() + itemHeight) / 2, getMeasuredWidth(), getMeasuredHeight());
-//        bottomMask.draw(canvas);
+        topMask.setBounds(0, 0, getMeasuredWidth(), (getMeasuredHeight() - itemHeight) / 2);
+        topMask.draw(canvas);
+
+        bottomMask.setBounds(0, (getMeasuredHeight() + itemHeight) / 2, getMeasuredWidth(), getMeasuredHeight());
+        bottomMask.draw(canvas);
     }
 
     private void drawText(Canvas canvas, String text, float offset) {
@@ -492,7 +525,20 @@ public class PickerView extends View {
         }
         if (textAlign == Layout.Alignment.ALIGN_CENTER) {
             textPaint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(text, getMeasuredWidth() / 2, textBottom, textPaint);
+            switch (viewDirection) {
+                case PICKER_VIEW_DIRECTION_LEFT:
+                    canvas.drawText(text, getMeasuredWidth() / 2 + Utils.pixelOfDp(context, 30), textBottom, textPaint);
+                    break;
+                case PICKER_VIEW_DIRECTION_RIGHT:
+                    canvas.drawText(text, getMeasuredWidth() / 2 - Utils.pixelOfDp(context, 30), textBottom, textPaint);
+                    break;
+                default:
+                    canvas.drawText(text, getMeasuredWidth() / 2, textBottom, textPaint);
+                    break;
+            }
+
+
+
         } else if (textAlign == Layout.Alignment.ALIGN_OPPOSITE) {
             textPaint.setTextAlign(Paint.Align.RIGHT);
             canvas.drawText(text, getMeasuredWidth(), textBottom, textPaint);

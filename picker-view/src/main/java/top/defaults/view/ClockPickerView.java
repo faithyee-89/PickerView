@@ -5,9 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ClockPickerView extends PickerViewGroup {
 
@@ -32,10 +36,10 @@ public class ClockPickerView extends PickerViewGroup {
         typedArray.recycle();
 
         hourPicker = new PickerView(context);
-        settlePickerView(hourPicker);
+        settlePickerView(hourPicker, false, PickerView.PICKER_VIEW_DIRECTION_LEFT);
 
         minutePicker = new PickerView(context);
-        settlePickerView(minutePicker);
+        settlePickerView(minutePicker, false, PickerView.PICKER_VIEW_DIRECTION_RIGHT);
 
         List<ClockPickerBean> hours = new ArrayList<>();
         List<ClockPickerBean> minutes = new ArrayList<>();
@@ -60,6 +64,27 @@ public class ClockPickerView extends PickerViewGroup {
         hourPicker.setOnSelectedItemChangedListener(listener);
         minutePicker.setOnSelectedItemChangedListener(listener);
 
+        initCurrentTime();
+    }
+
+    private void initCurrentTime() {
+        final Calendar tempCalendar = Calendar.getInstance();
+        SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        Log.i("PickView", HHmm.format(tempCalendar.getTime()));
+        String result = HHmm.format(tempCalendar.getTime());
+        String[] split = result.split(":");
+        int hour = Integer.parseInt(split[0]);
+        int minute = Integer.parseInt(split[1]);
+        Log.i("PickView", "hour = " + hour + " minute = " + minute);
+        setCurrentTime(hour, minute);
+    }
+
+    public void setCurrentTime(int hour, int minute) {
+        if (hour == 0 || minute == 0) {
+            return;
+        }
+        hourPicker.setSelectedItemPosition(hour - 1);
+        minutePicker.setSelectedItemPosition(minute - 1);
     }
 
     public interface OnSelectedDivisionChangedListener {
